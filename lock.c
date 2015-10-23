@@ -20,19 +20,17 @@ int main() {
     }
     struct flock lock;
     printf("%d\n", fd1);
-    memset(&lock, 0, sizeof(lock));
     lock.l_type = F_WRLCK;
     lock.l_whence = SEEK_SET;
     lock.l_start = 2;
     lock.l_len = 5;
-    lock.l_pid = getpid();
     printf("%d\n", fcntl(fd1, F_SETLK, &lock));
+    getchar();
     printf("%d %d %d\n", lock.l_start, lock.l_len, lock.l_pid);
     lock.l_type = F_WRLCK;
     lock.l_whence = SEEK_SET;
     lock.l_start = 1;
     lock.l_len = 6;
-    lock.l_pid = 0;
     printf("%d\n", fcntl(fd1, F_GETLK, &lock));
     if (lock.l_type == F_UNLCK) printf("Failed\n");
     printf("%d %d %d\n", lock.l_start, lock.l_len, lock.l_pid);
